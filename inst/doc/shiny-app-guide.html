@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+
+<title>Using the Shiny Application</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+
+<style type="text/css">
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+
+<style type="text/css">
+code {
+white-space: pre;
+}
+.sourceCode {
+overflow: visible;
+}
+</style>
+<style type="text/css" data-origin="pandoc">
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
+div.sourceCode
+{ }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Using the Shiny Application</h1>
+
+
+
+<div id="overview" class="section level2">
+<h2>Overview</h2>
+<p>The psychds Shiny application provides a guided, step-by-step
+interface for creating Psych-DS compliant datasets. This guide walks
+through each section of the application.</p>
+</div>
+<div id="launching-the-app" class="section level2">
+<h2>Launching the App</h2>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(psychds)</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="fu">run_psych_ds_app</span>()</span></code></pre></div>
+</div>
+<div id="application-sections" class="section level2">
+<h2>Application Sections</h2>
+<p>The app has five sections accessible from the sidebar. After the
+Welcome page, the four tools are:</p>
+<ol style="list-style-type: decimal">
+<li><strong>Create Dataset</strong> - Build a new Psych-DS dataset</li>
+<li><strong>Update Dictionary</strong> - Edit variable definitions</li>
+<li><strong>Validate Dataset</strong> - Check compliance with the
+standard</li>
+<li><strong>Dataset Explorer</strong> - Browse and filter any Psych-DS
+dataset</li>
+</ol>
+<hr />
+</div>
+<div id="create-dataset" class="section level2">
+<h2>Create Dataset</h2>
+<p>The dataset creation wizard has three steps:</p>
+<div id="step-1-project-directory-and-data-files" class="section level3">
+<h3>Step 1: Project Directory and Data Files</h3>
+<p>In this step, you:</p>
+<ol style="list-style-type: decimal">
+<li><p><strong>Select a project directory</strong> - This is the folder
+containing your research materials. We will be building a new dataset
+using the files you select from this directory.</p></li>
+<li><p><strong>Choose data files</strong> - Browse and select CSV files
+to include. Click on files/directories to select/deselect them.</p></li>
+<li><p><strong>Configure optional directories</strong> - Choose
+additional folders to create:</p>
+<ul>
+<li><code>analysis/</code> - Analysis scripts and pipelines</li>
+<li><code>materials/</code> - Study materials (stimuli, protocols,
+flyers)</li>
+<li><code>results/</code> - Output figures and tables</li>
+<li><code>products/</code> - Papers, presentations</li>
+<li><code>documentation/</code> - Additional documentation</li>
+</ul></li>
+</ol>
+<div class="callout-note">
+<p><strong>Your original files are safe!</strong> The app only reads
+from your existing files to create standardized copies. Your original
+data is never modified.</p>
+</div>
+</div>
+<div id="step-2-dataset-metadata" class="section level3">
+<h3>Step 2: Dataset Metadata</h3>
+<p>Enter information about your dataset:</p>
+<p><strong>Required fields:</strong></p>
+<ul>
+<li><strong>Name</strong> - A descriptive name for your dataset</li>
+<li><strong>Description</strong> - Brief description of what the data
+contains</li>
+</ul>
+<p><strong>Author information:</strong></p>
+<ul>
+<li>Add authors with their names and optional ORCID iDs</li>
+<li>Click “Add New Author” to add multiple authors</li>
+</ul>
+<p><strong>Detected Variables:</strong></p>
+<p>The app automatically detects column names from your CSV files.
+Variables with the same name across files are assumed to have identical
+definitions.</p>
+</div>
+<div id="step-3-standardize-filenames" class="section level3">
+<h3>Step 3: Standardize Filenames</h3>
+<p>Rename your data files using Psych-DS naming conventions.</p>
+<p>If you selected exactly <strong>one</strong> data file, a simplified
+guided panel appears instead: pick your first keyword (usually
+<code>study</code>), give it a value, and optionally add more
+keyword-value pairs. The full interface below appears when two or more
+files are selected.</p>
+<ol style="list-style-type: decimal">
+<li><p><strong>Select files</strong> - Check boxes to select multiple
+files for batch operations</p></li>
+<li><p><strong>Configure keywords</strong> - For each file, set values
+for standard keywords:</p>
+<ul>
+<li>study, session, subject, task, etc.</li>
+</ul></li>
+<li><p><strong>Auto-Name from Data</strong> - Automatically fill keyword
+values from constant columns in your data (for instance, if each file
+contains a column like “subject_id” with the same value in every row,
+you can use this column to name the file)</p></li>
+<li><p><strong>Preview</strong> - See the new filename as you configure
+keywords</p></li>
+</ol>
+<p><strong>Example transformation:</strong></p>
+<pre><code>Original: experiment_data_2024.csv
+New:      study-attention_session-1_data.csv</code></pre>
+</div>
+<div id="saving-your-dataset" class="section level3">
+<h3>Saving Your Dataset</h3>
+<p>After Step 3, you’ll be prompted to:</p>
+<ol style="list-style-type: decimal">
+<li>Choose a name for your dataset folder</li>
+<li>Select where to save it</li>
+<li>Review the file structure preview</li>
+<li>Click “Create Dataset” to generate the Psych-DS compliant
+dataset</li>
+</ol>
+<hr />
+</div>
+</div>
+<div id="update-dictionary" class="section level2">
+<h2>Update Dictionary</h2>
+<p>The data dictionary editor allows you to document all variables in
+your dataset.</p>
+<div id="loading-a-dataset" class="section level3">
+<h3>Loading a Dataset</h3>
+<ol style="list-style-type: decimal">
+<li>Click “Load Dataset”</li>
+<li>Navigate to your Psych-DS dataset folder</li>
+<li>The app will detect all CSV files and extract variable names</li>
+</ol>
+</div>
+<div id="editing-variables" class="section level3">
+<h3>Editing Variables</h3>
+<p>Select a variable from the list to edit its properties:</p>
+<p><strong>Basic Properties:</strong></p>
+<ul>
+<li><strong>Description</strong> - What this variable represents</li>
+<li><strong>Data Type</strong> - string, integer, number, boolean, date,
+etc.</li>
+<li><strong>Unit</strong> - Measurement unit (if applicable)</li>
+</ul>
+<p><strong>Constraints:</strong></p>
+<ul>
+<li><strong>Required</strong> - Whether the variable must have a
+value</li>
+<li><strong>Unique</strong> - Whether all values must be unique</li>
+<li><strong>Min/Max</strong> - Valid range for numeric variables</li>
+<li><strong>Pattern</strong> - Regex pattern for string validation</li>
+</ul>
+<p><strong>Categorical Values:</strong></p>
+<p>For variables with a fixed set of allowed values:</p>
+<ol style="list-style-type: decimal">
+<li>Click “Add Value”</li>
+<li>Enter the value, label, and description</li>
+<li>Repeat for all categories</li>
+</ol>
+<p>Example for a “condition” variable: | Value | Label | Description |
+|——-|——-|————-| | control | Control Group | No intervention | |
+treatment | Treatment Group | Received intervention |</p>
+</div>
+<div id="global-missing-value-codes" class="section level3">
+<h3>Global Missing Value Codes</h3>
+<p>Define codes that represent missing values across all variables:</p>
+<ul>
+<li>Common codes: <code>NA</code>, <code>N/A</code>, <code>-999</code>,
+<code>.</code>, <code>null</code></li>
+<li>Add custom codes specific to your data</li>
+</ul>
+</div>
+<div id="generating-a-data-dictionary" class="section level3">
+<h3>Generating a Data Dictionary</h3>
+<p>Click “Generate Human-Readable Dictionary” to create a formatted HTML
+document:</p>
+<ol style="list-style-type: decimal">
+<li>Choose whether to include missing value codes</li>
+<li>Click “Generate Dictionary”</li>
+</ol>
+<p>The HTML file is saved to your dataset folder and can be: - Opened in
+any web browser - Printed to PDF using Ctrl+P / Cmd+P - Shared with
+collaborators</p>
+<hr />
+</div>
+</div>
+<div id="validate-dataset" class="section level2">
+<h2>Validate Dataset</h2>
+<p>Check your dataset against the Psych-DS specification:</p>
+<div id="running-validation" class="section level3">
+<h3>Running Validation</h3>
+<ol style="list-style-type: decimal">
+<li>Select your dataset directory</li>
+<li>Click “Validate”</li>
+<li>Review the results</li>
+</ol>
+</div>
+<div id="validation-checks" class="section level3">
+<h3>Validation Checks</h3>
+<p>The validator checks:</p>
+<ul>
+<li>✅ Required files present
+(<code>dataset_description.json</code>)</li>
+<li>✅ Valid JSON syntax and structure</li>
+<li>✅ Required metadata fields populated</li>
+<li>✅ Data files in correct location</li>
+<li>✅ Filename conventions followed</li>
+<li>✅ Schema.org vocabulary used correctly</li>
+</ul>
+</div>
+<div id="understanding-results" class="section level3">
+<h3>Understanding Results</h3>
+<p>Results are shown as a checklist with:</p>
+<ul>
+<li><strong>Pass</strong> (green) - Check passed</li>
+<li><strong>Fail</strong> (red) - Issue found that must be fixed</li>
+</ul>
+<p>Click on any item to see details and suggestions for fixing
+issues.</p>
+<hr />
+</div>
+</div>
+<div id="dataset-explorer" class="section level2">
+<h2>Dataset Explorer</h2>
+<p>Browse any Psych-DS dataset interactively:</p>
+<ol style="list-style-type: decimal">
+<li><strong>Load a dataset</strong> - Select a Psych-DS dataset folder
+(datasets you have just created or validated are filled in
+automatically)</li>
+<li><strong>Browse files</strong> - Click a data file to view its
+contents</li>
+<li><strong>Filter and summarize</strong> - Filter rows by keyword
+values, select columns, and view summaries including missing-data
+counts</li>
+</ol>
+<p>Because all Psych-DS datasets share the same structure, the explorer
+works on any compliant dataset, not just ones created with this app.</p>
+<hr />
+</div>
+<div id="troubleshooting" class="section level2">
+<h2>Troubleshooting</h2>
+<div id="app-wont-start" class="section level3">
+<h3>App won’t start</h3>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="co"># Check dependencies</span></span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="fu">check_psychds_deps</span>(<span class="at">detailed =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a><span class="co"># Try forcing external browser</span></span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a><span class="fu">run_psych_ds_app</span>(<span class="at">force_browser =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+</div>
+<div id="validation-errors" class="section level3">
+<h3>Validation errors</h3>
+<ul>
+<li>Read the error message carefully</li>
+<li>Check that <code>dataset_description.json</code> exists and is valid
+JSON</li>
+<li>Ensure the <code>data/</code> folder exists with at least one data
+file</li>
+</ul>
+<p>For more help, <a href="https://github.com/psych-ds/psychds-r/issues">open an
+issue</a>.</p>
+</div>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
